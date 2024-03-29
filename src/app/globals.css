@@ -11,6 +11,7 @@
 *::-webkit-scrollbar {
   display: none !important;
 }
+
 .bg-radial-gradient {
   background-image: radial-gradient(
     circle at 10% 20%,
