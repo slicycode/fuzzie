@@ -23,19 +23,25 @@ const ProfilePicture = ({ userImage, onDelete, onUpload }: Props) => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       <p className="text-lg text-white">Profile Picture</p>
-      <div className="flex h-[30vh] flex-col items-center justify-center">
+      <div className="flex flex-col gap-2">
         {userImage ? (
           <>
-            <div className="relative h-full w-2/12">
-              <Image src={userImage} alt="User_Image" fill />
+            <div className="h-full w-full">
+              <Image
+                src={userImage}
+                alt="User_Image"
+                width={200}
+                height={200}
+                className="rounded-full w-24 h-24 object-cover"
+              />
             </div>
             <Button
               onClick={onRemoveProfileImage}
-              className="bg-transparent text-white/70 hover:bg-transparent hover:text-white"
+              className="bg-transparent w-fit px-2 text-white/70 hover:bg-transparent hover:text-white"
             >
-              <X /> Remove Logo
+              <X /> Remove
             </Button>
           </>
         ) : (

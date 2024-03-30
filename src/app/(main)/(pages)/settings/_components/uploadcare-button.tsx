@@ -23,7 +23,12 @@ const UploadCareButton = ({ onUpload }: Props) => {
         router.refresh()
       }
     }
-    ctxProviderRef.current.addEventListener('file-upload-success', handleUpload)
+    if (ctxProviderRef.current) {
+      ctxProviderRef.current.addEventListener(
+        'file-upload-success',
+        handleUpload
+      )
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

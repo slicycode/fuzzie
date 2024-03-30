@@ -1,7 +1,7 @@
 import ProfileForm from '@/components/forms/profile-form'
 import { db } from '@/lib/db'
-import ProfilePicture from './_components/profile-picture'
 import { currentUser } from '@clerk/nextjs'
+import ProfilePicture from './_components/profile-picture'
 
 const SettingsPage = async () => {
   const authUser = await currentUser()
@@ -11,6 +11,7 @@ const SettingsPage = async () => {
 
   const removeProfileImage = async () => {
     'use server'
+
     const response = await db.user.update({
       where: {
         clerkId: authUser.id,
@@ -20,6 +21,36 @@ const SettingsPage = async () => {
       },
     })
     return response
+  }
+
+  const uploadProfileImage = async (image: string) => {
+    'use server'
+
+    const id = authUser.id
+    const response = await db.user.update({
+      where: {
+        clerkId: id,
+      },
+      data: {
+        profileImage: image,
+      },
+    })
+
+    return response
+  }
+
+  const updateUserInfo = async (name: string) => {
+    'use server'
+
+    const updateUser = await db.user.update({
+      where: {
+        clerkId: authUser.id,
+      },
+      data: {
+        name,
+      },
+    })
+    return updateUser
   }
 
   return (
@@ -37,9 +68,9 @@ const SettingsPage = async () => {
         <ProfilePicture
           onDelete={removeProfileImage}
           userImage={user?.profileImage || ''}
-          onUpload={{}}
+          onUpload={uploadProfileImage}
         />
-        <ProfileForm user={{}} onUpdate={{}} />
+        <ProfileForm user={user} onUpdate={updateUserInfo} />
       </div>
     </div>
   )
