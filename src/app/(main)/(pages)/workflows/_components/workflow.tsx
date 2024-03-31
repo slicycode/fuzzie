@@ -1,13 +1,14 @@
+import React from 'react'
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import Link from 'next/link'
+import Image from 'next/image'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import Image from 'next/image'
-import Link from 'next/link'
 import { toast } from 'sonner'
 import { onFlowPublish } from '../_actions/workflow-connections'
 
@@ -66,7 +67,7 @@ const Workflow = ({ description, id, name, publish }: Props) => {
         </Label>
         <Switch
           id="airplane-mode"
-          onClick={onPublishFlow}
+          // onClick={onPublishFlow}
           defaultChecked={publish!}
         />
       </div>
