@@ -1,6 +1,10 @@
 import { CONNECTIONS } from '@/lib/constants'
 import { currentUser } from '@clerk/nextjs'
+import { onDiscordConnect } from './_actions/discord-connection'
+import { onNotionConnect } from './_actions/notion-connection'
+import { onSlackConnect } from './_actions/slack-connection'
 import ConnectionCard from './_components/connection-card'
+import { getUserData } from './_actions/get-user'
 
 type Props = {
   searchParams?: { [key: string]: string | undefined }
@@ -51,44 +55,43 @@ const ConnectionsPage = async (props: Props) => {
   if (!user) return null
 
   const onUserConnections = async () => {
-    // await onDiscordConnect(
-    //   channel_id!,
-    //   webhook_id!,
-    //   webhook_name!,
-    //   webhook_url!,
-    //   user.id,
-    //   guild_name!,
-    //   guild_id!
-    // )
-    // await onNotionConnect(
-    //   access_token!,
-    //   workspace_id!,
-    //   workspace_icon!,
-    //   workspace_name!,
-    //   database_id!,
-    //   user.id
-    // )
+    await onDiscordConnect(
+      channel_id!,
+      webhook_id!,
+      webhook_name!,
+      webhook_url!,
+      user.id,
+      guild_name!,
+      guild_id!
+    )
+    await onNotionConnect(
+      access_token!,
+      workspace_id!,
+      workspace_icon!,
+      workspace_name!,
+      database_id!,
+      user.id
+    )
 
-    // await onSlackConnect(
-    //   app_id!,
-    //   authed_user_id!,
-    //   authed_user_token!,
-    //   slack_access_token!,
-    //   bot_user_id!,
-    //   team_id!,
-    //   team_name!,
-    //   user.id
-    // )
+    await onSlackConnect(
+      app_id!,
+      authed_user_id!,
+      authed_user_token!,
+      slack_access_token!,
+      bot_user_id!,
+      team_id!,
+      team_name!,
+      user.id
+    )
 
     const connections: any = {}
 
-    // const user_info = await getUserData(user.id)
+    const user_info = await getUserData(user.id)
 
-    // //get user info with all connections
-    // user_info?.connections.map((connection) => {
-    //   connections[connection.type] = true
-    //   return (connections[connection.type] = true)
-    // })
+    user_info?.connections.map((connection) => {
+      connections[connection.type] = true
+      return (connections[connection.type] = true)
+    })
 
     // Google Drive connection will always be true
     // as it is given access during the login process

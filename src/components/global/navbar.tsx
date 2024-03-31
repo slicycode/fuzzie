@@ -3,9 +3,7 @@ import { MenuIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-type Props = {}
-
-const Navbar = async (props: Props) => {
+const Navbar = async () => {
   const user = await currentUser()
 
   return (
