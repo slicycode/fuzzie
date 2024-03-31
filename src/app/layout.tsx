@@ -1,10 +1,11 @@
+import { Toaster } from '@/components/ui/sonner'
+import { BillingProvider } from '@/providers/billing-provider'
+import ModalProvider from '@/providers/modal-provider'
 import { ThemeProvider } from '@/providers/theme-provider'
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 import './globals.css'
-import ModalProvider from '@/providers/modal-provider'
-import { Toaster } from '@/components/ui/sonner'
 
 const font = DM_Sans({ subsets: ['latin'] })
 
@@ -30,10 +31,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <ModalProvider>
-              {children}
-              <Toaster />
-            </ModalProvider>
+            <BillingProvider>
+              <ModalProvider>
+                {children}
+                <Toaster />
+              </ModalProvider>
+            </BillingProvider>
           </ThemeProvider>
         </body>
       </html>

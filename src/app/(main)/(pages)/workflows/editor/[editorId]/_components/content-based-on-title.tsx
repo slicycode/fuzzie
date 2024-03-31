@@ -11,12 +11,12 @@ import { onContentChange } from '@/lib/editor-utils'
 import { nodeMapper } from '@/lib/types'
 import { ConnectionProviderProps } from '@/providers/connections-provider'
 import { EditorState } from '@/providers/editor-provider'
+import axios from 'axios'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 import ActionButton from './action-button'
 import GoogleDriveFiles from './google-drive-files'
 import GoogleFileDetails from './google-file-details'
-// import ActionButton from './action-button'
-// import GoogleDriveFiles from './google-drive-files'
-// import GoogleFileDetails from './google-file-details'
 
 export interface Option {
   value: string
@@ -48,22 +48,21 @@ const ContentBasedOnTitle = ({
   const { selectedNode } = newState.editor
   const title = selectedNode.data.title
 
-  //   useEffect(() => {
-  //     const reqGoogle = async () => {
-  //       const response: { data: { message: { files: any } } } = await axios.get(
-  //         '/api/drive'
-  //       )
-  //       if (response) {
-  //         console.log(response.data.message.files[0])
-  //         toast.message('Fetched File')
-  //         setFile(response.data.message.files[0])
-  //       } else {
-  //         toast.error('Something went wrong')
-  //       }
-  //     }
-  //     reqGoogle()
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [])
+  useEffect(() => {
+    const reqGoogle = async () => {
+      const response: { data: { message: { files: any } } } = await axios.get(
+        '/api/drive'
+      )
+      if (response) {
+        toast.message('Fetched File')
+        setFile(response.data.message.files[0])
+      } else {
+        toast.error('Something went wrong')
+      }
+    }
+    reqGoogle()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // @ts-ignore
   const nodeConnectionType: any = nodeConnection[nodeMapper[title]]
